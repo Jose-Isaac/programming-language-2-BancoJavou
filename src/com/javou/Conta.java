@@ -5,13 +5,10 @@ public class Conta {
    private int numConta;
    private double saldo;
 
+   // Constructor da class
    public Conta(){}
 
-   public Conta(int numAgencia, int numConta) {
-       this.numAgencia = numAgencia;
-       this.numConta = numConta;
-   }
-
+   // Segundo constructor da class
    public Conta(int numAgencia, int numConta, double saldo) {
        this.numAgencia = numAgencia;
        this.numConta = numConta;
