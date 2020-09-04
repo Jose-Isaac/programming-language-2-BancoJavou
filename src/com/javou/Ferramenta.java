@@ -4,83 +4,83 @@ import javax.swing.*;
 import javax.xml.crypto.dsig.spec.XSLTTransformParameterSpec;
 
 public class Ferramenta {
-    public String getDadosUsuario(String pergunta) {
+    public String getDadosUsuario(String pergunta, String title) {
 
         // cria uma entrada de dados
-        String resposta = JOptionPane.showInputDialog(null, pergunta,"CADASTRO DE CLIENTE", JOptionPane.INFORMATION_MESSAGE);
+        String resposta = JOptionPane.showInputDialog(null, pergunta,title, JOptionPane.INFORMATION_MESSAGE);
 
         // caso o retorno seja null isso que dizer que o usuário fechou a genela
         if (resposta == null) {
             menu();
         } else if (resposta.equals("")) { // caso o usuário não digite nada o método é invocado novamente
-            resposta = getDadosUsuario(pergunta);
+            resposta = getDadosUsuario(pergunta, title);
         }
 
         return resposta;
     }
 
-    public double getDadosUsuarioDouble(String pergunta) {
+    public double getDadosUsuarioDouble(String pergunta, String title) {
         double resposta = 0.0;
 
         try {
-            resposta = Double.parseDouble(getDadosUsuario(pergunta));
+            resposta = Double.parseDouble(getDadosUsuario(pergunta, title));
         } catch (NumberFormatException e) {
             exibirMensagemErro("Ops: " + e.getMessage() + "\nInforme apenas caracteres numéricos");
-            getDadosUsuarioDouble(pergunta);
+            getDadosUsuarioDouble(pergunta, title);
         }
 
         if (resposta < 0) {
             exibirMensagemErro("Ops valor inválido\n Não é permitido valores negativos");
-            getDadosUsuarioDouble(pergunta);
+            getDadosUsuarioDouble(pergunta, title);
         }
 
         return resposta;
     }
 
-    public int getDadosUsuarioInteger(String pergunta) {
+    public int getDadosUsuarioInteger(String pergunta, String title) {
         int resposta = 0;
 
         try {
-            resposta = Integer.parseInt(getDadosUsuario(pergunta));
+            resposta = Integer.parseInt(getDadosUsuario(pergunta, title));
         } catch (NumberFormatException e) {
             exibirMensagemErro("Ops: " + e.getMessage() + "\nInforme apenas caracteres numéricos");
-            getDadosUsuarioInteger(pergunta);
+            getDadosUsuarioInteger(pergunta, title);
         }
 
         if (resposta < 0) {
             exibirMensagemErro("Ops valor inválido\n Não é permitido valores negativos");
-            getDadosUsuarioInteger(pergunta);
+            getDadosUsuarioInteger(pergunta, title);
         }
 
         return resposta;
     }
 
-    public char getSexo(String pergunta) {
-        char resposta = getDadosUsuario(pergunta).toUpperCase().charAt(0);
+    public char getSexo(String pergunta, String title) {
+        char resposta = getDadosUsuario(pergunta,title).toUpperCase().charAt(0);
 
         System.out.println(resposta);
 
         if (resposta != 'F' && resposta != 'M') {
             exibirMensagemErro("Opção inválida!\nValores permidos 'F' ou 'M'");
-            getDadosUsuario(pergunta);
+            getDadosUsuario(pergunta, title);
         }
 
         return resposta;
     }
 
-    public int getIdade(String pergunta) {
-        int idade = getDadosUsuarioInteger(pergunta);
+    public int getIdade(String pergunta, String title) {
+        int idade = getDadosUsuarioInteger(pergunta, title);
 
         if (idade < 18) {
             exibirMensagemErro("Ops, infelismente no momento não podemos abrir contas para menores de 18 anos");
-            getIdade(pergunta);
+            getIdade(pergunta, title);
         }
 
         return idade;
     }
 
-    public static void exibirMensagemSucesso(String mensagem) {
-        JOptionPane.showMessageDialog(null, mensagem, "Cadastro concluido", JOptionPane.INFORMATION_MESSAGE);
+    public static void exibirMensagemSucesso(String mensagem, String title) {
+        JOptionPane.showMessageDialog(null, mensagem, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void exibirMensagemErro(String mensagem) {
@@ -109,7 +109,7 @@ public class Ferramenta {
         // cria um JFrame
         JFrame frame = new JFrame("Banco JAVOU");
 
-        String[] opcaoMenu = {"Cadastrar Cliente", "Exibir Clientes"};
+        String[] opcaoMenu = {"Cadastrar Cliente", "Exibir Clientes", "Realizar Saque"};
 
         String opcaoSelecionada = (String) JOptionPane.showInputDialog(
             frame,
@@ -134,6 +134,11 @@ public class Ferramenta {
 
             case "Exibir Clientes":
                 javou01.exibirClientes();
+                menu();
+                break;
+
+            case "Realizar Saque":
+                javou01.saque();
                 menu();
                 break;
         }

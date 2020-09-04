@@ -4,7 +4,7 @@ public class Conta {
    private int numAgencia;
    private int numConta;
    private double saldo;
-   
+
    // Constructor da class
    public Conta(){}
 
