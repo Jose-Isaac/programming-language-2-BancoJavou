@@ -134,6 +134,27 @@ public class Banco {
 
     }
 
+    public void deposito() {
+        String setor = "DEPOSITO:";
+
+        int agencia = f1.getDadosUsuarioInteger("Informe o número da sua agência:", setor);
+        int conta = f1.getDadosUsuarioInteger("Informe o número da sua conta:", setor);
+
+        Cliente cliente = getCliente(conta, agencia);
+
+        if (cliente != null) {
+            double valorDeposito = f1.getDadosUsuarioDouble("Informe o valor a ser depositado:", setor);
+
+            double saldoAtual = cliente.getConta().getSaldo() + valorDeposito;
+            cliente.getConta().setSaldo(saldoAtual);
+
+            exibirMensagemSucesso("Deposito realizado com sucesso!\n\n Saldo atual de RS " + cliente.getConta().getSaldo(), setor);
+        } else {
+            exibirMensagemErro("Conta não encontrada");
+            this.deposito();
+        }
+    }
+
     private Cliente getCliente(int conta, int agencia) {
 
         Cliente clienteTemp = null;
