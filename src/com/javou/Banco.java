@@ -116,7 +116,7 @@ public class Banco {
         Cliente cliente = getCliente(conta, agencia);
 
         if (cliente != null) {
-            int valorSaque = f1.getDadosUsuarioInteger("Informe o valor do saque:", setor);
+            double valorSaque = f1.getDadosUsuarioDouble("Informe o valor do saque:", setor);
 
             if (cliente.getConta().getSaldo() >= valorSaque) {
                 double saldoAtual = cliente.getConta().getSaldo() - valorSaque;
