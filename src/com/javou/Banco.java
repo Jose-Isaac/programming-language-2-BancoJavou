@@ -200,11 +200,11 @@ public class Banco {
                     deposito(destinatario, valorTransferencia);
 
                     exibirMensagemSucesso(
-                            "Transferência realizado com sucesso!\n "
+                            "Transferência realizada com sucesso!\n\n "
                             + "Valor transferido: RS " + valorTransferencia
-                            + divisoria()
-                            + "\nSaldo atual em conta: R$ " + remetente.getConta().getSaldo(),
-                            setor);
+                            + "\n" + divisoria()
+                            + "\n\nSaldo atual em conta: R$ " + remetente.getConta().getSaldo(),
+                            setor + "COM SUCESSO!");
                 } else {
                     this.transferencia();
                 }
