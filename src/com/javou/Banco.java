@@ -110,21 +110,17 @@ public class Banco {
     public void saque() {
         String setor = "SAQUE:";
 
-        int agencia = f1.getDadosUsuarioInteger("Informe o número da sua agência:", setor);
-        int conta = f1.getDadosUsuarioInteger("Informe o número da sua conta:", setor);
-
-        Cliente cliente = getCliente(conta, agencia);
+        // Buscando os dados do cliente
+        Cliente cliente = getCliente(setor);
 
         if (cliente != null) {
             double valorSaque = f1.getDadosUsuarioDouble("Informe o valor do saque:", setor);
 
-            if (cliente.getConta().getSaldo() >= valorSaque) {
-                double saldoAtual = cliente.getConta().getSaldo() - valorSaque;
-                System.out.println(saldoAtual);
-                cliente.getConta().setSaldo(saldoAtual);
+            // Verificando se o saque foi realizado com sucesso
+            if (saque(cliente, valorSaque)) {
                 exibirMensagemSucesso("Saque realizado com sucesso!\n\n Saldo atual de RS " + cliente.getConta().getSaldo(), setor);
-            } else {
-                exibirMensagemErro("Saldo insuficiente!");
+            }
+            else {
                 saque();
             }
         } else {
@@ -134,30 +130,97 @@ public class Banco {
 
     }
 
+    private boolean saque(Cliente cliente, double valorSaque) {
+        // Verificando de existe saldo disponível
+        if (cliente.getConta().getSaldo() >= valorSaque) {
+
+            // Calculando saldo atual
+            double saldoAtual = cliente.getConta().getSaldo() - valorSaque;
+
+            // Atualizando o saldo do cliente
+            cliente.getConta().setSaldo(saldoAtual);
+
+            return true;
+        } else {
+            exibirMensagemErro("Saldo insuficiente!");
+            return false;
+        }
+    }
+
+    private void deposito(Cliente cliente, double valorDeposito) {
+        // Atualizando o saldo do cliente
+        cliente.getConta().setSaldo(valorDeposito);
+    }
+
     public void deposito() {
         String setor = "DEPOSITO:";
 
-        int agencia = f1.getDadosUsuarioInteger("Informe o número da sua agência:", setor);
-        int conta = f1.getDadosUsuarioInteger("Informe o número da sua conta:", setor);
-
-        Cliente cliente = getCliente(conta, agencia);
+        // Buscando os dados do cliente
+        Cliente cliente = getCliente(setor);
 
         if (cliente != null) {
             double valorDeposito = f1.getDadosUsuarioDouble("Informe o valor a ser depositado:", setor);
 
+            // Calculando o saldo atual
             double saldoAtual = cliente.getConta().getSaldo() + valorDeposito;
-            cliente.getConta().setSaldo(saldoAtual);
 
+            // Atualizado o saldo do cliente
+            deposito(cliente, saldoAtual);
+
+            // Informando ao usuário
             exibirMensagemSucesso("Deposito realizado com sucesso!\n\n Saldo atual de RS " + cliente.getConta().getSaldo(), setor);
         } else {
-            exibirMensagemErro("Conta não encontrada");
+            exibirMensagemErro("Conta não encontrada!");
             this.deposito();
         }
     }
 
-    private Cliente getCliente(int conta, int agencia) {
+    public void transferencia() {
+        String setor = "TRANSFERÊNCIA";
+
+        // Obtem os dados do remetente
+        Cliente remetente = getCliente(setor +" - REMETENTE:");
+
+        // Verificando se foi encontrada a conta do remetente
+        if (remetente != null) {
+
+            Cliente destinatario = getCliente(setor + " - DESTINATÁRIO");
+
+            // Verificando se foi encontrada a conta do destinatário
+            if (destinatario != null) {
+
+                // Obtendo o valor de ser transferido
+                double valorTransferencia = f1.getDadosUsuarioDouble("Informe o valor a ser transferido:", setor);
+
+                // Validando se o remetente tem saldo disponível
+                // Retirando o valor do remetente
+                if(saque(remetente, valorTransferencia)) {
+
+                    // Adicionando o valor ao destinatário
+                    deposito(destinatario, valorTransferencia);
+
+                    exibirMensagemSucesso(
+                            "Transferência realizado com sucesso!\n "
+                            + "Valor transferido: RS " + valorTransferencia
+                            + divisoria()
+                            + "\nSaldo atual em conta: R$ " + remetente.getConta().getSaldo(),
+                            setor);
+                } else {
+                    this.transferencia();
+                }
+            }
+        } else {
+            exibirMensagemErro("Conta não encontrada!");
+            this.transferencia();
+        }
+    }
+
+    private Cliente getCliente(String setor) {
 
         Cliente clienteTemp = null;
+
+        int agencia = f1.getDadosUsuarioInteger("Informe o número da sua agência:", setor);
+        int conta = f1.getDadosUsuarioInteger("Informe o número da sua conta:", setor);
 
         // Percorrendo a lista de clientes
         for (Cliente cliente : clientes) {
