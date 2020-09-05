@@ -113,7 +113,7 @@ public class Banco {
         int agencia = f1.getDadosUsuarioInteger("Informe o número da sua agência:", setor);
         int conta = f1.getDadosUsuarioInteger("Informe o número da sua conta:", setor);
 
-        Cliente cliente = getCliente(conta);
+        Cliente cliente = getCliente(conta, agencia);
 
         if (cliente != null) {
             int valorSaque = f1.getDadosUsuarioInteger("Informe o valor do saque:", setor);
@@ -138,18 +138,9 @@ public class Banco {
         // Percorrendo a lista de clientes
         for (Cliente cliente : clientes) {
 
-            // Verficando se existe a agência fornecida
-            if (cliente.getConta().getNumAgencia() == agencia) {
-
-                // Verificando a existencia da conta para a agencia fornecida
-                if (cliente.getConta().getNumConta() == conta) {
-                    clienteTemp = cliente;
-                } else {
-                    exibirMensagemErro("Conta não encontrada");
-                }
-
-            } else {
-                exibirMensagemErro("Agência não encontrada!");
+            // Verficando se existe a agência fornecida e a conta para a agencia fornecida
+            if (cliente.getConta().getNumAgencia() == agencia && cliente.getConta().getNumConta() == conta) {
+                clienteTemp = cliente;
             }
         }
 
