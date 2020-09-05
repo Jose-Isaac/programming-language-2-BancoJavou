@@ -119,13 +119,16 @@ public class Banco {
             int valorSaque = f1.getDadosUsuarioInteger("Informe o valor do saque:", setor);
 
             if (cliente.getConta().getSaldo() >= valorSaque) {
-                cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valorSaque);
+                double saldoAtual = cliente.getConta().getSaldo() - valorSaque;
+                System.out.println(saldoAtual);
+                cliente.getConta().setSaldo(saldoAtual);
+                exibirMensagemSucesso("Saque realizado com sucesso!\n\n Saldo atual de RS " + cliente.getConta().getSaldo(), setor);
             } else {
                 exibirMensagemErro("Saldo insuficiente!");
                 saque();
             }
         } else {
-            exibirMensagemErro("Conta não encontrado!");
+            exibirMensagemErro("Conta não encontrada!");
             this.saque();
         }
 
