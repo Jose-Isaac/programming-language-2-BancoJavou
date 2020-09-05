@@ -81,15 +81,32 @@ public class Banco {
 
         String clientesString = "";
 
+        String[] opcoes = {"Exibir Todos", "Buscar Cliente"};
+        String opcaoSelecionada = menuDropDown("EXIBIR CLIENTES:",opcoes);
 
+        System.out.println(opcaoSelecionada);
 
-        for (Cliente cliente : clientes) {
-            clientesString += cliente.toString();
-            clientesString += "\n" + divisoria() + "\n";
+        switch (opcaoSelecionada) {
+            case "Exibir Todos":
+
+                for (Cliente cliente : clientes) {
+                    clientesString += cliente.toString();
+                    clientesString += "\n" + divisoria() + "\n";
+                }
+
+                Ferramenta.exibrLista(clientesString);
+
+                break;
+
+            case "Buscar Cliente":
+                String nome = f1.getDadosUsuario("Informe o nome do cliente:", "BUSCAR DE CLIENTE:");
+
+                for (Cliente cliente : clientes) {
+                    if (cliente.getNome().intern() == nome.intern()) {
+                        f1.exibirMensagemSucesso(cliente.toString(), cliente.getNome());
+                    }
+                }
         }
-
-        // Chama o método responsavel por exibir em tela os clientes ativos
-        Ferramenta.exibrLista(clientesString);
     }
 
     public void saque() {
@@ -133,7 +150,6 @@ public class Banco {
         int[] agencias = {1, 2, 1};
         double[] saldos = {200, 300, 1000};
 
-        System.out.println(nomes.length);
         for (int i = 0; i < nomes.length ; i++) {
             Cliente novoCliente = new Cliente();
             novoCliente.setNome(nomes[i]);

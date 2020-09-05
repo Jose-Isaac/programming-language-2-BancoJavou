@@ -141,7 +141,7 @@ public class Ferramenta {
         }
     }
 
-    public String menuDropDrow(String title, String[] opcoes) {
+    public static String menuDropDown(String title, String[] opcoes) {
 
         String opcaoSelecionada = (String) JOptionPane.showInputDialog(
                 null,

@@ -4,8 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // cria uma nova agencia
-        // TODO: 03/09/2020 cria o numero da agencia estatico
+        Banco javou = new Banco();
 
         Ferramenta f1 = new Ferramenta();
 
