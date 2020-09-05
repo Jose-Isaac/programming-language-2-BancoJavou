@@ -84,8 +84,6 @@ public class Banco {
         String[] opcoes = {"Exibir Todos", "Buscar Cliente"};
         String opcaoSelecionada = menuDropDown("EXIBIR CLIENTES:",opcoes);
 
-        System.out.println(opcaoSelecionada);
-
         switch (opcaoSelecionada) {
             case "Exibir Todos":
 
@@ -111,6 +109,8 @@ public class Banco {
 
     public void saque() {
         String setor = "SAQUE:";
+
+        int agencia = f1.getDadosUsuarioInteger("Informe o número da sua agência:", setor);
         int conta = f1.getDadosUsuarioInteger("Informe o número da sua conta:", setor);
 
         Cliente cliente = getCliente(conta);
@@ -131,13 +131,25 @@ public class Banco {
 
     }
 
-    private Cliente getCliente(int conta) {
+    private Cliente getCliente(int conta, int agencia) {
 
         Cliente clienteTemp = null;
 
+        // Percorrendo a lista de clientes
         for (Cliente cliente : clientes) {
-            if (cliente.getConta().getNumConta() == conta) {
-                clienteTemp = cliente;
+
+            // Verficando se existe a agência fornecida
+            if (cliente.getConta().getNumAgencia() == agencia) {
+
+                // Verificando a existencia da conta para a agencia fornecida
+                if (cliente.getConta().getNumConta() == conta) {
+                    clienteTemp = cliente;
+                } else {
+                    exibirMensagemErro("Conta não encontrada");
+                }
+
+            } else {
+                exibirMensagemErro("Agência não encontrada!");
             }
         }
 
