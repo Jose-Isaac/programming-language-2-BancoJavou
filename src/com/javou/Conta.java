@@ -5,16 +5,6 @@ public class Conta {
    private int numConta;
    private double saldo;
 
-   // Constructor da class
-   public Conta(){}
-
-   // Segundo constructor da class
-   public Conta(int numAgencia, int numConta, double saldo) {
-       this.numAgencia = numAgencia;
-       this.numConta = numConta;
-       this.saldo = saldo;
-   }
-
     public void setNumAgencia(int numAgencia) {
         this.numAgencia = numAgencia;
     }
@@ -24,6 +14,7 @@ public class Conta {
     }
 
     public void setSaldo(double saldo) {
+       // Garnate que o saldo nunca fique negativo
        if (saldo >= 0) {
            this.saldo = saldo;
        } else {

@@ -6,15 +6,6 @@ public class Endereco {
     private String bairro;
     private String cidade;
 
-    public Endereco(){}
-
-    public Endereco(String rua, int numero, String bairro, String cidade) {
-        this.rua = rua;
-        this.numero = numero;
-        this.bairro = bairro;
-        this.cidade = cidade;
-    }
-
     public String getRua() {
         return rua;
     }
@@ -31,9 +22,7 @@ public class Endereco {
         this.numero = numero;
     }
 
-    public String getBairro() {
-        return bairro;
-    }
+    public String getBairro() { return bairro; }
 
     public void setBairro(String bairro) {
         this.bairro = bairro;

@@ -6,7 +6,7 @@ public class Main {
 
         Banco javou = new Banco();
 
-        Ferramenta f1 = new Ferramenta();
+        FerramentaGrafica f1 = new FerramentaGrafica();
 
         f1.menu();
     }
