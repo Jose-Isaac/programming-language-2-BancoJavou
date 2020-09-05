@@ -140,4 +140,17 @@ public class Ferramenta {
                 break;
         }
     }
+
+    public String menuDropDrow(String title, String[] opcoes) {
+
+        String opcaoSelecionada = (String) JOptionPane.showInputDialog(
+                null,
+                "Escolha uma opção",
+                title,
+                JOptionPane.INFORMATION_MESSAGE,
+                null, opcoes, opcoes[0]
+        );
+
+        return opcaoSelecionada;
+    }
 }
