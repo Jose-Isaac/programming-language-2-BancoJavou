@@ -24,7 +24,7 @@ public class Conta {
     }
 
     public void setSaldo(double saldo) {
-       if (saldo >= 200.00) {
+       if (saldo >= 0) {
            this.saldo = saldo;
        } else {
            System.out.println("Saldo mínimo insuficiente");
