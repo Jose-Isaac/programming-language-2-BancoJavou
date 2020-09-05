@@ -106,7 +106,7 @@ public class Ferramenta {
 
     public static void menu() {
 
-        String[] opcaoMenu = {"Cadastrar Cliente", "Exibir Clientes", "Realizar Saque"};
+        String[] opcaoMenu = {"Cadastrar Cliente", "Exibir Clientes", "Realizar Saque", "Realizar Depósito"};
 
         String opcaoSelecionada = (String) JOptionPane.showInputDialog(
             null,
@@ -136,6 +136,11 @@ public class Ferramenta {
 
             case "Realizar Saque":
                 javou01.saque();
+                menu();
+                break;
+
+            case "Realizar Depósito":
+                javou01.deposito();
                 menu();
                 break;
         }
