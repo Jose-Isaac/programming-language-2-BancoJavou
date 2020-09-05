@@ -151,6 +151,10 @@ public class Ferramenta {
                 null, opcoes, opcoes[0]
         );
 
+        if (opcaoSelecionada == null) {
+            menu();
+        }
+
         return opcaoSelecionada;
     }
 }
