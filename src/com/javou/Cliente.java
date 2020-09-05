@@ -71,4 +71,13 @@ public class Cliente {
         this.contato.setFixo(fixo);
         this.contato.setCelular(celular);
     }
+
+    @Override
+    public String toString() {
+        return "\nNome: " + this.getNome()
+                + "\nCPF: " + this.getCPF()
+                + "\nConta: " + this.getConta().getNumConta()
+                + "\nAgência: " + this.getConta().getNumAgencia()
+                + "\nSaldo em conta: " + this.getConta().getSaldo();
+    }
 }

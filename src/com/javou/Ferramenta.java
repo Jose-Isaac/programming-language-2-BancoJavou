@@ -106,13 +106,10 @@ public class Ferramenta {
 
     public static void menu() {
 
-        // cria um JFrame
-        JFrame frame = new JFrame("Banco JAVOU");
-
         String[] opcaoMenu = {"Cadastrar Cliente", "Exibir Clientes", "Realizar Saque"};
 
         String opcaoSelecionada = (String) JOptionPane.showInputDialog(
-            frame,
+            null,
             "Escolha uma opção",
             "Menu",
             JOptionPane.INFORMATION_MESSAGE,

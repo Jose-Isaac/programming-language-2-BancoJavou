@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import static com.javou.Ferramenta.*;
 
 public class Banco {
-    ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+    static  ArrayList<Cliente> clientes = new ArrayList<Cliente>();
     private static int proximaConta;
 
     Ferramenta f1 = new Ferramenta();
 
 
     public Banco() {
-        if (this.proximaConta >= 1) {
-            this.proximaConta++;
+        if (this.proximaConta <= 0) {
+            ++this.proximaConta;
+            popularBanco();
         }
     }
 
@@ -71,50 +72,24 @@ public class Banco {
                 "Cliente cadastrado com sucesso\n\n "
                 + "Dados de acesso do cliente\n"
                 + divisoria()
-                + "Nome: "
-                + nome
-                + "\nConta: "
-                + novoCliente.getConta()
-                + "Agência: "
-                + agencia,
+                + novoCliente.toString(),
                 setor
                 );
     }
 
     public void exibirClientes() {
 
-        // Campos que serão exibidos
-        final String[] coluna = {"Nome: ", "CPF: ", "Conta: ", "Agência: "};
+        String clientesString = "";
 
-        // armazena os dados que serão exibidos
-        String dados =
-                coluna[0] // Nome
-                +"Isaac\n"
-                + coluna[1] // CPF
-                + "000-000-000-00\n"
-                + coluna[2] // Conta
-                + "0001\n"
-                + coluna[3] // Agência
-                + "0203\n"
-                + Ferramenta.divisoria() + "\n";
 
-        // pepara apenas os dados necessários dos cliente para serem exibidos
+
         for (Cliente cliente : clientes) {
-            dados +=
-                coluna[0] // Nome
-                + cliente.getNome() + "\n"
-                + coluna[1] // CPF
-                + cliente.getCPF() + "\n"
-                + coluna[2] // Conta
-                + cliente.getConta().getNumConta() + "\n"
-                + coluna[3] // Agência
-                + cliente.getConta().getNumAgencia() + "\n"
-                + Ferramenta.divisoria()
-                + "\n";
+            clientesString += cliente.toString();
+            clientesString += "\n" + divisoria() + "\n";
         }
 
-        // Chama o método responsavel por exibir em tela os dados
-        Ferramenta.exibrLista(dados);
+        // Chama o método responsavel por exibir em tela os clientes ativos
+        Ferramenta.exibrLista(clientesString);
     }
 
     public void saque() {
@@ -124,9 +99,16 @@ public class Banco {
         Cliente cliente = getCliente(conta);
 
         if (cliente != null) {
-            
+            int valorSaque = f1.getDadosUsuarioInteger("Informe o valor do saque:", setor);
+
+            if (cliente.getConta().getSaldo() >= valorSaque) {
+                cliente.getConta().setSaldo(cliente.getConta().getSaldo() - valorSaque);
+            } else {
+                exibirMensagemErro("Saldo insuficiente!");
+                saque();
+            }
         } else {
-            exibirMensagemErro("Cliente não encontrado!");
+            exibirMensagemErro("Conta não encontrado!");
             this.saque();
         }
 
@@ -143,5 +125,23 @@ public class Banco {
         }
 
         return clienteTemp;
+    }
+
+    private void popularBanco() {
+        String[] nomes = {"José", "Isaac", "Newton"};
+        String cpf = "000-000-000-00";
+        int[] agencias = {1, 2, 1};
+        double[] saldos = {200, 300, 1000};
+
+        System.out.println(nomes.length);
+        for (int i = 0; i < nomes.length ; i++) {
+            Cliente novoCliente = new Cliente();
+            novoCliente.setNome(nomes[i]);
+            novoCliente.setCPF(cpf);
+            novoCliente.setConta(getProximaConta(), agencias[i], saldos[i]);
+
+            clientes.add(novoCliente);
+        }
+
     }
 }
